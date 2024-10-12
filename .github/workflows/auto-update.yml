@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository  # Mengambil kode dari repository "Penghijauan"
         uses: actions/checkout@v2
         with:
-          repository: username/Penghijauan  # Ganti 'username' dengan username GitHub-mu
+          repository: siegrin/Penghijauan  # Ganti 'username' dengan username GitHub-mu
 
       - name: Pull changes from GitHub  # Menarik perubahan terbaru dari branch 'main'
         run: git pull origin main
