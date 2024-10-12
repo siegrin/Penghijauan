@@ -1,0 +1,18 @@
+name: Daily Auto Update Workflow
+
+# Menjalankan secara otomatis setiap hari pada pukul 00:00 (UTC)
+on:
+  schedule:
+    - cron: '0 */4 * * *'  # Setiap 4 jam pada menit ke-0
+
+jobs:
+  update-repo:
+    runs-on: ubuntu-latest  # Menjalankan di server Ubuntu
+    steps:
+      - name: Checkout repository  # Mengambil kode dari repository "Penghijauan"
+        uses: actions/checkout@v2
+        with:
+          repository: username/Penghijauan  # Ganti 'username' dengan username GitHub-mu
+
+      - name: Pull changes from GitHub  # Menarik perubahan terbaru dari branch 'main'
+        run: git pull origin main
