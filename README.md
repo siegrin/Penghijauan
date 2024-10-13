@@ -1,17 +1,15 @@
 # Penghijauan Project
 
-Project ini bertujuan untuk melestarikan lingkungan dengan program penghijauan.
+This repository is dedicated to the reforestation and environmental sustainability projects in Galela. We aim to develop tools and resources to support reforestation efforts in various regions.
 
-## Total Changes
-Total Changes: 0
+## Features
+- Interactive maps showing reforestation progress
+- Data visualization on tree planting efforts
+- Educational resources on environmental sustainability
 
-## Tentang Proyek
-Ini adalah proyek open source untuk mengelola kegiatan penghijauan dengan berbagai fitur untuk melacak kontribusi, area yang dihijaukan, dan data pendukung lainnya.
+## Contribution
+Feel free to fork this repository, open issues, or submit pull requests to help improve this project.
 
-## Fitur
-- Melacak area penghijauan
-- Memantau kontribusi donatur dan relawan
-- Melihat statistik perkembangan
+---
 
-## Cara Berkontribusi
-Anda dapat berkontribusi dengan mengajukan pull request atau memberikan masukan melalui issue tracker.
+Last updated: Sun Oct 13 2024 00:00:00 UTC
