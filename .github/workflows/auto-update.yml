@@ -1,40 +1,28 @@
-name: Daily Auto Update Workflow
+name: Auto Update README Every 4 Hours
 
-# Menjalankan secara otomatis setiap hari pada pukul 00:00 (UTC)
+# Menjalankan secara otomatis setiap 4 jam
 on:
   schedule:
     - cron: '0 */4 * * *'  # Setiap 4 jam pada menit ke-0
 
 jobs:
   update-repo:
-    runs-on: ubuntu-latest  # Menjalankan di server Ubuntu
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository  # Mengambil kode dari repository "Penghijauan"
+      - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          repository: siegrin/Penghijauan  # Ganti dengan username dan repository yang benar
+          repository: siegrin/Penghijauan  # Ganti dengan nama repo yang benar
 
-      - name: Pull changes from GitHub  # Menarik perubahan terbaru dari branch 'main'
+      - name: Pull changes from GitHub
         run: git pull origin main
 
-      - name: Check for README changes  # Memeriksa apakah README.md berubah
+      - name: Update README with timestamp
         run: |
-          if git diff --name-only HEAD^ HEAD | grep -q 'README.md'; then
-            echo "README.md has changed"
-          else
-            echo "No changes in README.md"
-          fi
-
-      - name: Increment README change count  # Menambahkan hitungan perubahan jika README.md berubah
-        run: |
-          if git diff --name-only HEAD^ HEAD | grep -q 'README.md'; then
-            echo "README.md has changed. Incrementing count."
-            COUNT=$(grep -oP '(?<=Total Changes: )\d+' README.md)
-            COUNT=$((COUNT + 1))
-            sed -i "s/Total Changes: [0-9]*/Total Changes: $COUNT/" README.md
-            git config user.name "GitHub Actions"
-            git config user.email "actions@github.com"
-            git add README.md
-            git commit -m "Increment README.md change count to $COUNT"
-            git push origin main
-          fi
+          TIMESTAMP=$(date)
+          echo "Last updated: $TIMESTAMP" > README.md  # Perbarui atau buat README.md dengan timestamp
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add README.md
+          git commit -m "Auto update README at $TIMESTAMP"
+          git push origin main
