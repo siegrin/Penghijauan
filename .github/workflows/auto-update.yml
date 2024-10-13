@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest  # Menjalankan di server Ubuntu
     steps:
       - name: Checkout repository  # Mengambil kode dari repository "Penghijauan"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: siegrin/Penghijauan  # Ganti dengan username dan repository yang benar
 
