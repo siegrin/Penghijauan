@@ -1,0 +1,29 @@
+
+name: Auto Update README Every 4 Hours
+
+# Menjalankan secara otomatis setiap 4 jam
+on:
+  schedule:
+    - cron: '0 */2 * * *'  # Setiap 4 jam pada menit ke-0
+
+jobs:
+  update-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          repository: siegrin/Penghijauan  # Ganti dengan nama repo yang benar
+
+      - name: Pull changes from GitHub
+        run: git pull origin main
+
+      - name: Update README with timestamp
+        run: |
+          TIMESTAMP=$(date)
+          echo "Last updated: $TIMESTAMP" > README.md  # Perbarui atau buat README.md dengan timestamp
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add README.md
+          git commit -m "Auto update README at $TIMESTAMP"
+          git push origin main
