@@ -1,10 +1,9 @@
-
 name: C4
 
 # Menjalankan secara otomatis setiap 4 jam
 on:
   schedule:
-    - cron: '0 */2 * * *'  # Setiap 4 jam pada menit ke-0
+    - cron: '0 */4 * * *'  # Setiap 4 jam pada menit ke-0
 
 jobs:
   update-repo:
@@ -26,4 +25,7 @@ jobs:
           git config user.email "piubitt@gmail.com"
           git add README.md
           git commit -m "Auto update README at $TIMESTAMP"
-          git push origin main
+
+      - name: Push changes to GitHub
+        run: |
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/siegrin/Penghijauan.git
