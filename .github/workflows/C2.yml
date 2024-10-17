@@ -1,5 +1,5 @@
 
-name: Auto Update README Every 4 Hours
+name: C2
 
 # Menjalankan secara otomatis setiap 4 jam
 on:
