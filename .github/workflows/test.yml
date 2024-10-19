@@ -19,7 +19,7 @@ jobs:
       
       - name: Configure Git to use GPG
         run: |
-          git config --global user.signingkey <your-gpg-key-id>
+          git config --global user.signingkey F77FA5C7E92588A756B36E606FD5D53407B2C619
           git config --global commit.gpgSign true
 
       - name: Make Changes
