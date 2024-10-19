@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main  # Ganti dengan nama branch kamu jika perlu
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Import GPG Key
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import --batch --yes
+      
+      - name: Configure Git to use GPG
+        run: |
+          git config --global user.signingkey <your-gpg-key-id>
+          git config --global commit.gpgSign true
+
+      - name: Make Changes
+        run: |
+          # Tambahkan perintah untuk membuat perubahan di repository
+          echo "Some changes" >> changes.txt
+          git add changes.txt
+          git commit -m "Add changes" -S  # Menandatangani komit
+          git push  # Mengirimkan perubahan
