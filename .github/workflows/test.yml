@@ -11,21 +11,21 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2  # Checkout kode dari branch yang dipush
 
       - name: Import GPG Key
         run: |
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import --batch --yes
-      
+          gpg --list-secret-keys  # Memastikan GPG key diimpor dengan benar
+
       - name: Configure Git to use GPG
         run: |
-          git config --global user.signingkey F77FA5C7E92588A756B36E606FD5D53407B2C619
-          git config --global commit.gpgSign true
+          git config --global user.signingkey F77FA5C7E92588A756B36E606FD5D53407B2C619  # GPG key ID Anda
+          git config --global commit.gpgSign true  # Mengaktifkan tanda tangan untuk commit
 
       - name: Make Changes
         run: |
-          # Tambahkan perintah untuk membuat perubahan di repository
-          echo "Some changes" >> changes.txt
-          git add changes.txt
-          git commit -m "Add changes" -S  # Menandatangani komit
-          git push  # Mengirimkan perubahan
+          echo "Some changes" >> changes.txt  # Menambahkan teks ke file
+          git add changes.txt  # Menambahkan file ke staging area
+          git commit -S -m "Add changes"  # Menandatangani komit
+          git push  # Mengirimkan perubahan ke branch
