@@ -1,9 +1,9 @@
 name: C1
 
-# Menjalankan secara otomatis setiap 4 jam
+# Menjalankan secara otomatis setiap 5 menit
 on:
   schedule:
-    - cron: '0 */4 * * *'  # Setiap 4 jam pada menit ke-0
+    - cron: '*/5 * * * *'  # Setiap 5 menit
 
 jobs:
   update-repo:
@@ -15,14 +15,27 @@ jobs:
           repository: siegrin/Penghijauan  # Ganti dengan nama repo yang benar
 
       - name: Pull changes from GitHub
-        run: git pull origin main
+        run: git pull origin main  # Mengambil perubahan terbaru dari branch 'main'
 
       - name: Update README with timestamp
         run: |
-          TIMESTAMP=$(date)
+          TIMESTAMP=$(date)  # Mendapatkan timestamp saat ini
           echo "Last updated: $TIMESTAMP" > README.md  # Perbarui atau buat README.md dengan timestamp
-          git config user.name "siegrin"
-          git config user.email "piubitt@gmail.com"
-          git add README.md
-          git commit -m "Auto update README at $TIMESTAMP"
-          git push origin main
+          
+      - name: Configure Git
+        run: |
+          git config --global user.name "siegrin"  # Mengatur nama pengguna untuk commit
+          git config --global user.email "piubitt@gmail.com"  # Mengatur email pengguna untuk commit
+          echo "$GPG_PRIVATE_KEY" | gpg --import  # Mengimpor GPG key dari secret
+          gpg --list-secret-keys  # Menampilkan kunci rahasia untuk verifikasi
+
+      - name: Commit changes
+        run: |
+          git add README.md  # Menambahkan README.md ke staging area
+          git commit -S -m "Auto update README at $TIMESTAMP" || echo "No changes to commit"  # Commit dengan tanda tangan jika ada perubahan
+
+      - name: Push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Gunakan token yang aman untuk melakukan push
+        run: |
+          git push origin main  # Mengirimkan perubahan ke branch 'main'
