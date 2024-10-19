@@ -20,8 +20,10 @@ jobs:
 
       - name: Configure Git to use GPG
         run: |
-          git config --global user.signingkey F77FA5C7E92588A756B36E606FD5D53407B2C619  # GPG key ID Anda
-          git config --global commit.gpgSign true  # Mengaktifkan tanda tangan untuk commit
+          git config user.signingkey F77FA5C7E92588A756B36E606FD5D53407B2C619  # GPG key ID Anda
+          git config user.email "piubitt@gmail.com"  # Mengatur email pengguna
+          git config user.name "siegrin"  # Mengatur nama pengguna
+          git config commit.gpgSign true  # Mengaktifkan tanda tangan untuk commit
 
       - name: Make Changes
         run: |
