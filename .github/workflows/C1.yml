@@ -3,7 +3,7 @@ name: C1
 # Menjalankan secara otomatis setiap 5 menit
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Setiap 5 menit
+    - cron: '0 */4 * * *'  # Setiap 4 jam pada menit ke-0
 
 jobs:
   update-repo:
