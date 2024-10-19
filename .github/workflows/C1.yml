@@ -15,7 +15,7 @@ jobs:
           repository: siegrin/Penghijauan  # Ganti dengan nama repo yang benar
 
       - name: Pull changes from GitHub
-        run: git pull origin main  # Mengambil perubahan terbaru dari branch 'main'
+        run: git pull origin main
 
       - name: Update README with timestamp
         run: |
@@ -24,19 +24,16 @@ jobs:
           
       - name: Configure Git
         run: |
-          git config --global user.name "siegrin"  # Mengatur nama pengguna untuk commit
-          git config --global user.email "piubitt@gmail.com"  # Mengatur email pengguna untuk commit
-          git config --global user.signingkey F77FA5C7E92588A756B36E606FD5D53407B2C619  # Menambahkan GPG key ID
-          echo "$GPG_PRIVATE_KEY" | gpg --import  # Mengimpor GPG key dari secret
-          gpg --list-secret-keys  # Menampilkan kunci rahasia untuk verifikasi
+          git config user.name "siegrin"  # Mengatur nama pengguna untuk commit
+          git config user.email "piubitt@gmail.com"  # Mengatur email pengguna untuk commit
+          git config user.signingkey F77FA5C7E92588A756B36E606FD5D53407B2C619  # Menambahkan GPG key ID
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import --batch --yes  # Mengimpor GPG key dari secret
 
       - name: Commit changes
         run: |
           git add README.md  # Menambahkan README.md ke staging area
           git commit -S -m "Auto update README at $TIMESTAMP" || echo "No changes to commit"  # Commit dengan tanda tangan jika ada perubahan
 
-      - name: Push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Gunakan token yang aman untuk melakukan push
+      - name: Push changes to GitHub
         run: |
-          git push origin main  # Mengirimkan perubahan ke branch 'main'
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/siegrin/Penghijauan.git  # Mengirimkan perubahan ke branch 'main'
