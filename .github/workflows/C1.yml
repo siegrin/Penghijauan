@@ -13,6 +13,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: siegrin/Penghijauan  # Ganti dengan nama repo yang benar
+          fetch-depth: 0  # Ambil semua commit untuk memastikan historis tersedia
 
       - name: Pull changes from GitHub
         run: git pull origin main  # Mengambil perubahan terbaru dari branch 'main'
@@ -21,12 +22,12 @@ jobs:
         run: |
           TIMESTAMP=$(date)  # Mendapatkan timestamp saat ini
           echo "Last updated: $TIMESTAMP" > README.md  # Perbarui atau buat README.md dengan timestamp
-          
+
       - name: Configure Git
         run: |
           git config --global user.name "siegrin"  # Mengatur nama pengguna untuk commit
           git config --global user.email "piubitt@gmail.com"  # Mengatur email pengguna untuk commit
-          echo "$GPG_PRIVATE_KEY" | gpg --import  # Mengimpor GPG key dari secret
+          echo "$GPG_PRIVATE_KEY" | gpg --import --batch --yes  # Mengimpor GPG key dari secret
           gpg --list-secret-keys  # Menampilkan kunci rahasia untuk verifikasi
 
       - name: Commit changes
